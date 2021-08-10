@@ -1,0 +1,27 @@
+{
+  "name": "rapid-scooter-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "aedes": "^0.46.1",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "redis": "^3.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mossafaei/rapid-scooter-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mossafaei/rapid-scooter-server/issues"
+  },
+  "homepage": "https://github.com/mossafaei/rapid-scooter-server#readme"
+}

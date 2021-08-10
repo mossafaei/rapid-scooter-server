@@ -52,45 +52,30 @@ app.post('/testapi',function(req,res){
 })
 
 app.post('/TurnLightOn',function(req,res){
-  console.log(req.ip)
-  if (req.ip !== "::ffff:127.0.0.0"){
     aedes.publish({topic:"/scooter/admin/" + req.body["ScooterID"] ,payload:"night=1"})
     rclient.hmset(req.body["ScooterID"], 'Light' , 1)
     res.json({"Status" : "Sucess"})
-  }else
-    res.json({"Status" : "Faild"})
 })
 
 app.post('/TurnLightOff',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
       aedes.publish({topic:"/scooter/admin/" + req.body["ScooterID"],payload:"night=0"})
        rclient.hmset(req.body["ScooterID"], 'Light' , 0)
       res.json({"Status" : "Sucess"})
-  }else
-    res.json({"Status" : "Faild"})
-
 })
 
 app.post('/Lock',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
     LockScooter(req.body["ScooterID"])
     rclient.hmset(req.body["ScooterID"], 'Lock' , 1)
     res.json({"Status" : "Sucess"})
-  }else
-    res.json({"Status" : "Faild"})
 })
 
 app.post('/UnLock',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
     UnLockScooter(req.body["ScooterID"])
     rclient.hmset(req.body["ScooterID"], 'Lock' , 0)
     res.json({"Status" : "Sucess"})
-  }else
-    res.json({"Status" : "Faild"})
 })
 
 app.post('/StartTrip',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
     rclient.sismember('Scooters',req.body["ScooterID"],function(err,object){
       rclient.hget(req.body["ScooterID"],'Available',function(err,hgetobject){
         if (object === 0 || hgetobject.toString() == '0')
@@ -105,12 +90,9 @@ app.post('/StartTrip',function(req,res){
         }
       })
     })
-  }else
-    res.json({"Status" : "Faild"})
 })
 
 app.post('/EndTrip',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
     rclient.sismember('Scooters',req.body["ScooterID"],function(err,object){
       var checkavailable
       rclient.hget(req.body["ScooterID"],'Available',function(err,hgetobject){
@@ -151,11 +133,8 @@ app.post('/EndTrip',function(req,res){
         }
       })
     })
-  }else
-    res.json({"Status" : "Faild"})
 })
 app.post('/ScooterDetail',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
     var ScooterDetailObject,detaillength
     var inde = 0
     rclient.smembers('Scooters',function(err,object){
@@ -180,13 +159,11 @@ app.post('/ScooterDetail',function(req,res){
             })
         }
     })
-  }else
-    res.json({"Status" : "Faild"})
+
 })
 
 
 app.post('/OneScooterDetail',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
     serverRes={}
     serverRes["Status"] = "OK"
     serverRes["List"] = []
@@ -199,12 +176,9 @@ app.post('/OneScooterDetail',function(req,res){
             res.json({"Status":"NotAvailable"})
     })
   })
-  }else
-    res.json({"Status" : "Faild"})
 })
 
 app.post('/CheckScooterAvailable',function(req,res){
-  if (req.ip !== "::ffff:127.0.0.0"){
     rclient.sismember('Scooters',req.body["ScooterID"],function(err,object){
       rclient.hget(req.body["ScooterID"],'Available',function(err,hgetobject){
         if (object === 0 || hgetobject.toString() == '0')
@@ -213,8 +187,6 @@ app.post('/CheckScooterAvailable',function(req,res){
             res.json({"Status":"Available"});
       })
     })
-  }else
-    res.json({"Status" : "Faild"})
 })
 
 app.listen(8080)
